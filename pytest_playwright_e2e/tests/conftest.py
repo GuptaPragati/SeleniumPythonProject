@@ -10,11 +10,6 @@ from ..utils.config_reader import ConfigReader
 # You can open a saved trace using either the Playwright CLI or in the browser at trace.playwright.dev. Make sure to add the full path to where your trace.zip file is located.
 # https://playwright.dev/python/docs/trace-viewer#recording-a-trace
 
-def pytest_addoption(parser):
-    parser.addoption("--browser_name", action="store", default="chrome")
-    # parser.addoption("--url", action="store", default="https://rahulshettyacademy.com/client/")
-
-
 # session will run once for entire execution
 # @pytest.fixture
 # def launch_browser(playwright, request):
@@ -33,47 +28,47 @@ def pytest_addoption(parser):
 #     context.tracing.stop(path="trace.zip")
 #     browser.close()
 
-# https://github.com/automationneemo/PlaywrightDemoYt/blob/main/basics/test_dynamic_web_table.py
-@pytest.fixture(scope="session")
-def config():
-    reader = ConfigReader(env="DEFAULT")
-    return {
-        "base_url": reader.get_base_url(),
-        "browser_name": reader.get_browser_name(),
-        "slow": reader.get_browser_slow(),
-        "username": reader.get_username(),
-        "password": reader.get_password()
-    }
-
-@pytest.fixture
-def open_browser(config, playwright):
-    global browser
-    browser_name = config["browser_name"]
-    if browser_name == "chrome":
-        browser = playwright.chromium.launch(headless=False)
-    elif browser_name == "firefox":
-        browser = playwright.firefox.launch(headless=False)
-    context = browser.new_context()
-    page = context.new_page()
-    # page.goto(config["base_url"])
-    yield page
-    browser.close()
-
-@pytest.fixture(scope="session")
-def open_selenium_browser(config):
-    global driver
-    browser_name = config["browser_name"]
-    if browser_name == "chrome":
-        driver = webdriver.Chrome()
-    elif browser_name == "firefox":
-        driver = webdriver.Firefox()
-    driver.maximize_window()
-    driver.get(config["base_url"])
-    yield driver
-    driver.quit()
-
-
-
-
-
-
+# # https://github.com/automationneemo/PlaywrightDemoYt/blob/main/basics/test_dynamic_web_table.py
+# @pytest.fixture(scope="session")
+# def config():
+#     reader = ConfigReader(env="DEFAULT")
+#     return {
+#         "base_url": reader.get_base_url(),
+#         "browser_name": reader.get_browser_name(),
+#         "slow": reader.get_browser_slow(),
+#         "username": reader.get_username(),
+#         "password": reader.get_password()
+#     }
+#
+# @pytest.fixture
+# def open_browser(config, playwright):
+#     global browser
+#     browser_name = config["browser_name"]
+#     if browser_name == "chrome":
+#         browser = playwright.chromium.launch(headless=False)
+#     elif browser_name == "firefox":
+#         browser = playwright.firefox.launch(headless=False)
+#     context = browser.new_context()
+#     page = context.new_page()
+#     # page.goto(config["base_url"])
+#     yield page
+#     browser.close()
+#
+# @pytest.fixture(scope="session")
+# def open_selenium_browser(config):
+#     global driver
+#     browser_name = config["browser_name"]
+#     if browser_name == "chrome":
+#         driver = webdriver.Chrome()
+#     elif browser_name == "firefox":
+#         driver = webdriver.Firefox()
+#     driver.maximize_window()
+#     driver.get(config["base_url"])
+#     yield driver
+#     driver.quit()
+#
+#
+#
+#
+#
+#

@@ -26,7 +26,7 @@ def config():
         "password": reader.get_password()
     }
 
-@pytest.fixture(autouse=True,scope="session")
+@pytest.fixture(autouse=True,scope="function")
 def open_selenium_browser(config):
     global driver
     browser_name = config["browser_name"]
